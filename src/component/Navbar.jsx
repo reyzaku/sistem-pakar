@@ -4,10 +4,14 @@ import { Fragment } from 'react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 
+
+
+// Tambahkan Menu disini jika ingin membuat menu baru
 const navigation = [
-	{ name: 'Dashboard', href: '#', current: true },
-	{ name: 'Admin', href: '#', current: false },
+	{ name: 'Dashboard', href: '/', current: true },
+	{ name: 'Admin', href: '/admin', current: false },
 ];
+
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -21,6 +25,7 @@ const Navbar = () => {
 					<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 						<div className="relative flex h-16 items-center justify-between">
 							<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+
 								{/* Mobile menu button*/}
 								<Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
 									<span className="sr-only">Open main menu</span>
@@ -31,9 +36,15 @@ const Navbar = () => {
 									)}
 								</Disclosure.Button>
 							</div>
+
+							{/* Logo Section */}
 							<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 								<div className="flex flex-shrink-0 items-center">
-									<p className="text-white">SISTEM PAKAR</p>
+
+									{/* Hapus atau comment tag dibawah ini jika ingin menggunakan logo Image */}
+									<Link to={"/"} className="text-white">SISTEM PAKAR</Link>
+
+									{/* Hapus atau comment tag dibawah ini jika ingin menggunakan logo Text */}
 									{/* <img
 										className="block h-8 w-auto lg:hidden"
 										src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
@@ -44,12 +55,16 @@ const Navbar = () => {
 										src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
 										alt="Your Company"
 									/> */}
+
+									
 								</div>
+
+								{/* Navigation Button */}
 								<div className="hidden sm:ml-16 sm:block">
 									<div className="flex space-x-4">
 										{navigation.map((item) => (
 											<Link
-												to="/"
+												to={item.href}
 												key={item.name}
 												className={classNames(
 													item.current
@@ -64,8 +79,11 @@ const Navbar = () => {
 										))}
 									</div>
 								</div>
+
+
 							</div>
 							<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
 								{/* Profile dropdown */}
 								<Menu as="div" className="relative ml-3">
 									<div>
@@ -88,6 +106,9 @@ const Navbar = () => {
 										leaveTo="transform opacity-0 scale-95"
 									>
 										<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+											{/* Copy Menu Item Sign out Button jika ingin menambahkan Menu baru */}
+
+											{/* Sign out Button */}
 											<Menu.Item>
 												{({ active }) => (
 													<button
@@ -96,10 +117,27 @@ const Navbar = () => {
 															'block w-full text-left px-4 py-2 text-sm text-gray-700'
 														)}
 													>
-														Sign out
+														Masuk
 													</button>
 												)}
 											</Menu.Item>
+
+											<Menu.Item>
+												{({ active }) => (
+													<button
+														className={classNames(
+															active ? 'bg-gray-100' : '',
+															'block w-full text-left px-4 py-2 text-sm text-gray-700'
+														)}
+													>
+														Keluar
+													</button>
+												)}
+											</Menu.Item>
+
+											{/* New Menu Here */}
+
+
 										</Menu.Items>
 									</Transition>
 								</Menu>

@@ -1,9 +1,10 @@
-import React from 'react';
-import Card from '../component/Card';
+import React from 'react'
+import Card from '../../component/Card';
 
-const Homepage = () => {
-	return (
-		<div className="">
+
+const HomepageAdmin = () => {
+    return (
+        <div className="">
 			<div className="flex flex-col justify-center items-center mt-32 gap-4">
 				<h1 className="font-bold text-3xl text-center text-indigo-900">
 					SISTEM PAKAR UNTUK MENDIAGNOSA PENYAKIT PADA TANAMAN PADI MENGGUNAKAN
@@ -20,36 +21,29 @@ const Homepage = () => {
 			</div>
 			<div className="flex justify-between gap-4 items-center mt-32">
 				<Card
-					title="Daftar Penyakit"
+					title="Tambah Penyakit"
 					link="penyakit"
 					text="white"
 					color="bg-red-500"
 					hover="hover:bg-red-600"
 				/>
 				<Card
-					title="Daftar Gejala"
+					title="Tambah Gejala"
 					link="gejala"
 					text="white"
 					color="bg-yellow-500"
 					hover="hover:bg-yellow-600"
 				/>
 				<Card
-					title="Konsultasi"
+					title="Rules"
 					link="konsultasi"
 					text="white"
 					color="bg-blue-500"
 					hover="hover:bg-blue-600"
 				/>
-				<Card
-					title="Riwayat Konsultasi"
-					link="riwayat"
-					text="white"
-					color="bg-green-500"
-					hover="hover:bg-green-600"
-				/>
 			</div>
 		</div>
-	);
-};
+    )
+}
 
-export default Homepage;
+export default HomepageAdmin

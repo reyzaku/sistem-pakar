@@ -9,25 +9,29 @@ const HasilDiagnosa = () => {
 			<h1 className="text-sm text-indigo-900 text-center">
 				Dibuat pada: props.created_at
 			</h1>
-			<div className="overflow-x-auto relative mt-16">
-				<div className="flex justify-start text-xl border-r border-t border-l border-gray-500 h-16 items-center">
-					<p className="basis-1/4 border-r ml-8 border-gray-500 text-indigo-900">
-						Nama Penyakit
-					</p>
-					<div>
-						<p className="w-full text-gray-500 ml-16">props.disease_name</p>
-					</div>
-				</div>
-				<div className="flex justify-start text-xl border-r border-t border-l border-gray-500 py-4">
-					<p className="basis-1/4 border-r ml-8 border-gray-500 text-indigo-900">
-						Gejala
-					</p>
-					<div>
-						<p className="w-full text-gray-500 ml-16">props.disease_name</p>
-						<p className="w-full text-gray-500 ml-16">props.disease_name</p>
-						<p className="w-full text-gray-500 ml-16">props.disease_name</p>
-					</div>
-				</div>
+			<div className="mt-16 mx-20">
+				<table className="text-lg text-left text-gray-500">
+					<tbody>
+						<tr className="bg-white border-b">
+							<td className="py-4 px-6 font-bold">Nama Penyakit</td>
+							<td className="py-4 px-6 font-bold text-red-500">Bash</td>
+						</tr>
+
+						<tr className="bg-white border-b">
+							<td className="py-4 px-6 font-bold">Gejala</td>
+							<td className="py-4 px-6">
+								<li>Daung Menguning</li>
+								<li>Batang Rusak</li>
+								<li>Akar Membusuk</li>
+							</td>
+						</tr>
+
+						<tr className="bg-white border-b">
+							<td className="py-4 px-6 font-bold">Solusi</td>
+							<td className="py-4 px-6">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam, mollitia asperiores quos ipsa velit ea veniam hic delectus voluptatem id suscipit alias cupiditate repellat doloremque eligendi voluptates sapiente vitae quod!</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	);
