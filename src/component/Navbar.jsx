@@ -2,9 +2,10 @@ import React from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
-
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/userReducers';
+import { authRequest } from '../AxiosInstances';
 
 // Tambahkan Menu disini jika ingin membuat menu baru
 const navigation = [
@@ -12,12 +13,21 @@ const navigation = [
 	{ name: 'Admin', href: '/admin', current: false },
 ];
 
-
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
+	const user = useSelector((state) => state.user.currentUser);
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const LogoutHandle = async () => {
+		await authRequest.delete('/logout');
+		dispatch(logout());
+		navigate('/');
+	};
+
 	return (
 		<Disclosure as="nav" className="bg-gray-800">
 			{({ open }) => (
@@ -25,7 +35,6 @@ const Navbar = () => {
 					<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 						<div className="relative flex h-16 items-center justify-between">
 							<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-
 								{/* Mobile menu button*/}
 								<Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
 									<span className="sr-only">Open main menu</span>
@@ -40,9 +49,10 @@ const Navbar = () => {
 							{/* Logo Section */}
 							<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 								<div className="flex flex-shrink-0 items-center">
-
 									{/* Hapus atau comment tag dibawah ini jika ingin menggunakan logo Image */}
-									<Link to={"/"} className="text-white">SISTEM PAKAR</Link>
+									<Link to={'/'} className="text-white">
+										SISTEM PAKAR
+									</Link>
 
 									{/* Hapus atau comment tag dibawah ini jika ingin menggunakan logo Text */}
 									{/* <img
@@ -55,8 +65,6 @@ const Navbar = () => {
 										src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
 										alt="Your Company"
 									/> */}
-
-									
 								</div>
 
 								{/* Navigation Button */}
@@ -79,11 +87,8 @@ const Navbar = () => {
 										))}
 									</div>
 								</div>
-
-
 							</div>
 							<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
 								{/* Profile dropdown */}
 								<Menu as="div" className="relative ml-3">
 									<div>
@@ -109,35 +114,42 @@ const Navbar = () => {
 											{/* Copy Menu Item Sign out Button jika ingin menambahkan Menu baru */}
 
 											{/* Sign out Button */}
-											<Menu.Item>
-												{({ active }) => (
-													<button
-														className={classNames(
-															active ? 'bg-gray-100' : '',
-															'block w-full text-left px-4 py-2 text-sm text-gray-700'
-														)}
-													>
-														Masuk
-													</button>
-												)}
-											</Menu.Item>
+											{user ? (
+												<></>
+											) : (
+												<Menu.Item>
+													{({ active }) => (
+														<Link to={"/masuk"}
+															className={classNames(
+																active ? 'bg-gray-100' : '',
+																'block w-full text-left px-4 py-2 text-sm text-gray-700'
+															)}
+														>
+															Masuk
+														</Link>
+													)}
+												</Menu.Item>
+											)}
 
-											<Menu.Item>
-												{({ active }) => (
-													<button
-														className={classNames(
-															active ? 'bg-gray-100' : '',
-															'block w-full text-left px-4 py-2 text-sm text-gray-700'
-														)}
-													>
-														Keluar
-													</button>
-												)}
-											</Menu.Item>
+											{user ? (
+												<Menu.Item>
+													{({ active }) => (
+														<button
+															className={classNames(
+																active ? 'bg-gray-100' : '',
+																'block w-full text-left px-4 py-2 text-sm text-gray-700'
+															)}
+															onClick={LogoutHandle}
+														>
+															Keluar
+														</button>
+													)}
+												</Menu.Item>
+											) : (
+												<></>
+											)}
 
-											{/* New Menu Here */}
-
-
+											{/* New Dropdown Menu Here */}
 										</Menu.Items>
 									</Transition>
 								</Menu>

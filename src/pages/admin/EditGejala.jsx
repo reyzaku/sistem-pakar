@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { publicRequest } from '../../AxiosInstances';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { authRequest, publicRequest } from '../../AxiosInstances';
 
-const TambahGejala = () => {
-	//stored input Value
+const EditGejala = () => {
+    //stored input Value
 	const [gejala, setGejala] = useState({});
+    const {id} = useParams()
+
+    useEffect(() => {
+        const getData = async () => {
+			try {
+				const res = await publicRequest.get(`/symptoms/${id}`);
+				setGejala(res.data.data);
+			} catch (err) {
+				setErr('Err');
+			}
+		};
+		getData();
+    })
+
 
 	const [err, setErr] = useState(null)
 
@@ -13,20 +27,20 @@ const TambahGejala = () => {
 	//Send Value Handler
 	const submitHandle = (e) => {
         e.preventDefault()
-		publicRequest
-			.post('/symptoms')
+		authRequest
+			.put(`/symptoms/${gejala.id}`)
 			.then(() => {
-				navigate('/gejala');
+				navigate('/admin/manage');
 			})
 			.catch((err) => {
 				setErr(err)
 			});
 	};
 
-	return (
-		<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    return (
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 			<h2 className="mb-16 font-bold text-3xl text-indigo-900">
-				Tambah Data Gejala
+				Edit Data Gejala
 			</h2>
 			<div className="w-full bg-white rounded-l md:mt-0 sm:max-w-md xl:p-0 ">
 				<form action="submit" className="flex flex-col gap-8">
@@ -40,7 +54,8 @@ const TambahGejala = () => {
 						<input
 							type="text"
 							name="disease"
-							placeholder="kode_penyakit"
+                            disabled
+                            value={gejala.id}
 							onChange={(e) =>
 								setGejala({ ...gejala, diseaseId: e.target.value })
 							}
@@ -59,6 +74,7 @@ const TambahGejala = () => {
 							type="text"
 							name="stem"
 							placeholder=""
+                            value={gejala.stem}
 							onChange={(e) => setGejala({ ...gejala, stem: e.target.value })}
 							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 						/>
@@ -75,6 +91,7 @@ const TambahGejala = () => {
 							type="text"
 							name="leaf"
 							placeholder=""
+                            value={gejala.leaf}
 							onChange={(e) => setGejala({ ...gejala, leaf: e.target.value })}
 							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 						/>
@@ -91,6 +108,7 @@ const TambahGejala = () => {
 							type="text"
 							name="fruit"
 							placeholder=""
+                            value={gejala.fruit}
 							onChange={(e) => setGejala({ ...gejala, fruit: e.target.value })}
 							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 						/>
@@ -107,6 +125,7 @@ const TambahGejala = () => {
 							type="text"
 							name="root"
 							placeholder=""
+                            value={gejala.root}
 							onChange={(e) => setGejala({ ...gejala, root: e.target.value })}
 							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 						/>
@@ -122,7 +141,7 @@ const TambahGejala = () => {
 				</form>
 			</div>
 		</div>
-	);
-};
+    )
+}
 
-export default TambahGejala;
+export default EditGejala

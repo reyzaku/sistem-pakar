@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/AuthCall';
 
 const Auth = () => {
+	const [user, setUser] = useState({})
+	const [error, setError] = useState("")
+	const dispatch = useDispatch()
+
+	const LoginHandle = (event) => {
+		event.preventDefault();
+		login(dispatch, user);
+	};
+
 	return (
 		<div>
 			<section class="">
@@ -22,6 +33,9 @@ const Auth = () => {
 										type="email"
 										name="email"
 										id="email"
+										onChange={(e) =>
+											setUser({ ...user, email: e.target.value })
+										}
 										class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 										placeholder="admin@admin.com"
 										required=""
@@ -38,6 +52,9 @@ const Auth = () => {
 										type="password"
 										name="password"
 										id="password"
+										onChange={(e) =>
+											setUser({ ...user, password: e.target.value })
+										}
 										placeholder="••••••••"
 										class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 										required=""
@@ -45,6 +62,7 @@ const Auth = () => {
 								</div>
 								<button
 									type="submit"
+									onClick={LoginHandle}
 									class="w-full text-white bg-indigo-900 bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 								>
 									Masuk
