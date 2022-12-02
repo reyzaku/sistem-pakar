@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { publicRequest } from '../AxiosInstances';
 
 const DaftarGejala = () => {
+	//Storing Data Penyakit
+	const [gejala, setGejala] = useState([]);
+
+	//Storing Fetching Error
+	const [err, setErr] = useState(null);
+
+	useEffect(() => {
+		const getData = async () => {
+			try {
+				const res = await publicRequest.get(`/symptoms`);
+				setGejala(res.data.data);
+			} catch (err) {
+				setErr('Err');
+			}
+		};
+		getData();
+	}, []);
 	return (
 		<div>
 			<div className="overflow-x-auto relative mt-16">
@@ -8,7 +26,7 @@ const DaftarGejala = () => {
 					<thead className="text-md text-gray-50 uppercase bg-gray-700">
 						<tr>
 							<th scope="col" className="py-3 px-6">
-								Kode Gejala
+								Kode Penyakit
 							</th>
 							<th scope="col" className="py-3 px-6">
 								Batang
@@ -16,54 +34,24 @@ const DaftarGejala = () => {
 							<th scope="col" className="py-3 px-6">
 								Daun
 							</th>
-                            <th scope="col" className="py-3 px-6">
+							<th scope="col" className="py-3 px-6">
 								Buah
 							</th>
-                            <th scope="col" className="py-3 px-6">
+							<th scope="col" className="py-3 px-6">
 								Akar
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr className="bg-white border-b">
-							<td className="py-4 px-6">G0001</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">Apakah Daun padi menguning?</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-                        <tr className="bg-white border-b">
-							<td className="py-4 px-6">G0002</td>
-							<td className="py-4 px-6">Apakah terdapat batang yang patah pada tanaman padi?</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-                        <tr className="bg-white border-b">
-							<td className="py-4 px-6">G0003</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">Apakah daun padi mengalami kerusakan?</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-                        <tr className="bg-white border-b">
-							<td className="py-4 px-6">G0004</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">Apakah tanaman padi tidak berbuah?</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-                        <tr className="bg-white border-b">
-							<td className="py-4 px-6">G0004</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">Apakah Akar padi membusuk?</td>
-						</tr>
+						{gejala?.map((item, index) => (
+							<tr className="bg-white border-b">
+								<td className="py-4 px-6">P000{item.diseaseId}</td>
+								<td className="py-4 px-6">{item.stem !== null ? item.stem : "-"}</td>
+								<td className="py-4 px-6">{item.leaf !== null ? item.leaf : "-"}</td>
+								<td className="py-4 px-6">{item.fruit !== null ? item.fruit : "-"}</td>
+								<td className="py-4 px-6">{item.root !== null ? item.root : "-"}</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</div>
