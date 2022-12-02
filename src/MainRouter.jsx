@@ -10,6 +10,8 @@ import RiwayatKonsultasi from './pages/RiwayatKonsultasi';
 import Auth from './pages/admin/Auth';
 import PertanyaanPertama from './pages/PertanyaanPertama';
 import Pertanyaan from './pages/Pertanyaan';
+import TambahPenyakit from './pages/admin/TambahPenyakit';
+import TambahGejala from './pages/admin/TambahGejala';
 
 const MainRouter = () => {
 	return (
@@ -27,9 +29,8 @@ const MainRouter = () => {
 			{/* Admin Pages */}
 			<Route path="/masuk" element={<Auth />} />
 			<Route path="/admin" element={<HomepageAdmin />} />
-			<Route path="/admin/rule" element={<RiwayatKonsultasi />} />
-			<Route path="/admin/tambah/gejala" element={<RiwayatKonsultasi />} />
-			<Route path="/admin/tambah/penyakit" element={<RiwayatKonsultasi />} />
+			<Route path="/admin/tambah/penyakit" element={<TambahPenyakit />} />
+			<Route path="/admin/tambah/gejala" element={<TambahGejala />} />
 		</Routes>
 	);
 };

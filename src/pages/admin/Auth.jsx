@@ -11,7 +11,7 @@ const Auth = () => {
 								Masuk Sebagai Admin
 							</h1>
 							<form class="space-y-4 md:space-y-6" action="#">
-								<div>
+								<div className='flex flex-col gap-4'>
 									<label
 										for="email"
 										class="block mb-2 text-sm font-medium text-gray-900"
