@@ -11,14 +11,14 @@ const EditPenyakit = () => {
     useEffect(() => {
         const getData = async () => {
 			try {
-				const res = await publicRequest.get(`/disease/${id}`);
+				const res = await publicRequest.get(`/diseases/${id}`);
 				setPenyakit(res.data.data);
 			} catch (err) {
 				setErr('Err');
 			}
 		};
 		getData();
-    })
+    },[])
 
 
 	const [err, setErr] = useState(null)
@@ -56,6 +56,7 @@ const EditPenyakit = () => {
 							type="text"
 							name="disease"
 							placeholder="kode_penyakit"
+							value={penyakit.name}
 							onChange={(e) =>
 								setPenyakit({ ...penyakit, name: e.target.value })
 							}
@@ -75,13 +76,15 @@ const EditPenyakit = () => {
 							name="stem"
 							rows={5}
 							placeholder=""
+							value={penyakit.solution}
 							onChange={(e) =>
 								setPenyakit({ ...penyakit, solution: e.target.value })
 							}
 							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 						/>
 					</div>
-
+					
+					
 					<div className="flex flex-col gap-2">
 						<label
 							for="file-upload"

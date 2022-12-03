@@ -61,7 +61,7 @@ const Manage = () => {
 								<td className="py-4 px-6">{item.name}</td>
 								<td className="py-4 px-6 flex gap-4">
 									<Link
-										to={`/admin/edit/penyakit/${item.id}`}
+										to={`/admin/edit/penyakit/${item.name.split(' ').join('').toLowerCase()}`}
 										className="bg-blue-500 px-8 py-2 text-white text-sm rounded-md"
 									>
 										Edit Penyakit
