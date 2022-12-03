@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Card from '../component/Card';
+import { consultReset } from '../redux/consultReduces';
 
 const Homepage = () => {
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(consultReset())
+	},[])
+	
 	return (
 		<div className="">
 			<div className="flex flex-col justify-center items-center mt-32 gap-4">

@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const RiwayatKonsultasi = () => {
+	const consult = useSelector((state) => state.consult);
+
+	const [data, setData] = useState({})
+
+	const SaveData = (event) => {
+		event.prevenDefault()
+		
+	}
 	return (
 		<div>
 			<div className="overflow-x-auto relative mt-16">

@@ -12,7 +12,7 @@ const PenyakitCard = (props) => {
 					<img
 						alt="Placeholder"
 						className="block h-auto w-full"
-						src={props.data.image_url}
+						src={`http://localhost:5000/${props.data.image_url}`}
 					/>
 				</h3>
 

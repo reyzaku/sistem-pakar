@@ -6,6 +6,7 @@ const consultSlice = createSlice({
         disease: "",
         nextQuestion: "",
         precentage: 0
+        
     },
     reducers: {
         consultYes:(state, action)=>{
@@ -13,14 +14,13 @@ const consultSlice = createSlice({
             state.nextQuestion = action.payload.nextQuestion
             state.precentage+= 1
         },
-        consultNo:(state, action)=>{
-            state.nextQuestion = action.payload.nextQuestion
-        },
-        consultDupe:(state, action)=> {
-            state.nextQuestion = action.payload.nextQuestion
+        consultReset:(state)=> {
+            state.disease = ""
+            state.nextQuestion = ""
+            state.precentage = 0
         }
     }
 })
 
-export const {consultYes, consultDupe} = consultSlice.actions
+export const {consultYes, consultReset} = consultSlice.actions
 export default consultSlice.reducer
