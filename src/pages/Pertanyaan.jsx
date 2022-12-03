@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { publicRequest } from '../AxiosInstances';
-import { consultYes } from '../redux/consultReduces';
+import { consultDupe, consultYes } from '../redux/consultReduces';
 
 const Pertanyaan = () => {
 	//Storing Data
@@ -43,36 +43,39 @@ const Pertanyaan = () => {
 			switch (consult.nextQuestion) {
 				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 				case '':
+					//Kalau Gejala daun kosong Lompat ke fruit
+					// if(data[id.charAt(0)].leaf !== null){
+					// 	dispatch(consultDupe({nextQuestion: 'fruit'}))
+					// }
 					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' }));
-					nextQuestion = id.charAt(0);
+					nextQuestion = question.charAt(0);
 					setQuestion(nextQuestion);
 					break;
 
 				//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 				case 'leaf':
-					dispatch(
-						consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' })
-					);
-					nextQuestion = id.charAt(0);
+					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' }));
+					nextQuestion = question.charAt(0);
 					setQuestion(nextQuestion);
 					break;
 
 				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
 				case 'fruit':
 					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'root' }));
-					nextQuestion = id.charAt(0);
+					nextQuestion = question.charAt(0);
 					setQuestion(nextQuestion);
 					break;
 
 				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
 				case 'root':
 					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'end' }));
-					nextQuestion = id.charAt(0);
+					nextQuestion = question.charAt(0);
 					navigate(`/riwayat`);
 					break;
 				default:
 					break;
 			}
+			
 			//Jika User Menjawab Tidak
 		} else if (answer === 'no') {
 			nextQuestion = question.substring(1);
