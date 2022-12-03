@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { publicRequest } from '../AxiosInstances';
+import { consultYes } from '../redux/consultReduces';
 
 const Pertanyaan = () => {
 	//Storing Data
 	const [data, setData] = useState([]);
+
+	const consult = useSelector((state) => state.consult);
+
+	const location = useLocation();
+	const currentLocation = location.pathname.split('/')[1];
 
 	//Storing Fetching Error
 	const [err, setErr] = useState(null);
 
 	const { id } = useParams();
 	let navigate = useNavigate();
+	let dispatch = useDispatch();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -23,17 +31,58 @@ const Pertanyaan = () => {
 			}
 		};
 		getData();
-	}, []);
+	}, [consult]);
 
 	const Answer = (event) => {
 		let answer = event.target.name;
-		let nextQuestion = ""
+		let nextQuestion = '';
+
+		//Jika User Klik Iya
 		if (answer === 'yes') {
-			nextQuestion = id.charAt(0)
-			navigate(`/q/${nextQuestion}`)
+
+			//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
+			if (consult.nextQuestion === '') {
+				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' }));
+				nextQuestion = id.charAt(0);
+				if (currentLocation === 'q') {
+					navigate(`/q2/${nextQuestion}`);
+				} else {
+					navigate(`/q/${nextQuestion}`);
+				}
+
+			//Kalau Next Question stem, maka Pertanyaan selanjutnya fruit
+			} else if (consult.nextQuestion === 'leaf') {
+				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' }));
+				nextQuestion = id.charAt(0);
+				if (currentLocation === 'q') {
+					navigate(`/q2/${nextQuestion}`);
+				} else {
+					navigate(`/q/${nextQuestion}`);
+				}
+			
+			//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
+			} else if (consult.nextQuestion === 'fruit') {
+				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'root' }));
+				nextQuestion = id.charAt(0);
+				if (currentLocation === 'q') {
+					navigate(`/q2/${nextQuestion}`);
+				} else {
+					navigate(`/q/${nextQuestion}`);
+				}
+
+			//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
+			} else if (consult.nextQuestion === 'root') {
+				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'end' }));
+				nextQuestion = id.charAt(0);
+				navigate(`/riwayat`);
+			}
 		} else if (answer == 'no') {
-			nextQuestion = id.substring(1)
-			navigate(`/q/${nextQuestion}`)
+			nextQuestion = id.substring(1);
+			if(currentLocation === "q"){
+				navigate(`/q2/${nextQuestion}`);
+			} else {
+				navigate(`/q/${nextQuestion}`);
+			}
 		}
 	};
 
@@ -45,7 +94,17 @@ const Pertanyaan = () => {
 					<></>
 				) : (
 					<h3 className="text-4xl font-bold text-indigo-900">
-						Apakah {data[0].stem} ?
+						Apakah{' '}
+						{consult.nextQuestion === ''
+							? data[0].stem
+							: consult.nextQuestion === 'leaf'
+							? data[0].leaf
+							: consult.nextQuestion === 'fruit'
+							? data[0].fruit
+							: consult.nextQuestion === 'root'
+							? data[0].root
+							: ''}{' '}
+						?
 					</h3>
 				)}
 

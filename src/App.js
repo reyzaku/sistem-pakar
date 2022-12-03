@@ -5,7 +5,7 @@ import MainRouter from './MainRouter.jsx';
 
 function App() {
 	return (
-		<Router>
+		<Router forceRefresh={true}>
 			<Navbar/>
 			<div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
 				<MainRouter/>

@@ -29,6 +29,7 @@ const MainRouter = () => {
 			<Route path="/gejala/gejala" element={<Penyakit />} />
 			<Route path="/konsultasi" element={<PertanyaanPertama />} />
 			<Route path="/q/:id" element={<Pertanyaan />} />
+			<Route path="/q2/:id" element={<Pertanyaan />} />
 			<Route path="/hasil" element={<HasilDiagnosa />} />
 			<Route path="/riwayat" element={<RiwayatKonsultasi />} />
 
