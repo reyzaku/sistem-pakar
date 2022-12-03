@@ -7,6 +7,8 @@ import { consultYes } from '../redux/consultReduces';
 const Pertanyaan = () => {
 	//Storing Data
 	const [data, setData] = useState([]);
+	const { id } = useParams();
+	const [question, setQuestion] = useState(id);
 
 	const consult = useSelector((state) => state.consult);
 
@@ -16,14 +18,13 @@ const Pertanyaan = () => {
 	//Storing Fetching Error
 	const [err, setErr] = useState(null);
 
-	const { id } = useParams();
 	let navigate = useNavigate();
 	let dispatch = useDispatch();
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const res = await publicRequest.get(`/symptoms/${id}`);
+				const res = await publicRequest.get(`/symptoms/${question}`);
 				setData(res.data.data);
 				console.log(res.data);
 			} catch (err) {
@@ -31,7 +32,7 @@ const Pertanyaan = () => {
 			}
 		};
 		getData();
-	}, [consult]);
+	}, [question, setQuestion]);
 
 	const Answer = (event) => {
 		let answer = event.target.name;
@@ -39,49 +40,47 @@ const Pertanyaan = () => {
 
 		//Jika User Klik Iya
 		if (answer === 'yes') {
+			switch (consult.nextQuestion) {
+				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
+				case '':
+					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' }));
+					nextQuestion = id.charAt(0);
+					setQuestion(nextQuestion);
+					break;
 
-			//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
-			if (consult.nextQuestion === '') {
-				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' }));
-				nextQuestion = id.charAt(0);
-				if (currentLocation === 'q') {
-					navigate(`/q2/${nextQuestion}`);
-				} else {
-					navigate(`/q/${nextQuestion}`);
-				}
+				//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
+				case 'leaf':
+					dispatch(
+						consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' })
+					);
+					nextQuestion = id.charAt(0);
+					setQuestion(nextQuestion);
+					break;
 
-			//Kalau Next Question stem, maka Pertanyaan selanjutnya fruit
-			} else if (consult.nextQuestion === 'leaf') {
-				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' }));
-				nextQuestion = id.charAt(0);
-				if (currentLocation === 'q') {
-					navigate(`/q2/${nextQuestion}`);
-				} else {
-					navigate(`/q/${nextQuestion}`);
-				}
-			
-			//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
-			} else if (consult.nextQuestion === 'fruit') {
-				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'root' }));
-				nextQuestion = id.charAt(0);
-				if (currentLocation === 'q') {
-					navigate(`/q2/${nextQuestion}`);
-				} else {
-					navigate(`/q/${nextQuestion}`);
-				}
+				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
+				case 'fruit':
+					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'root' }));
+					nextQuestion = id.charAt(0);
+					setQuestion(nextQuestion);
+					break;
 
-			//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
-			} else if (consult.nextQuestion === 'root') {
-				dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'end' }));
-				nextQuestion = id.charAt(0);
-				navigate(`/riwayat`);
+				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
+				case 'root':
+					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'end' }));
+					nextQuestion = id.charAt(0);
+					navigate(`/riwayat`);
+					break;
+				default:
+					break;
 			}
-		} else if (answer == 'no') {
-			nextQuestion = id.substring(1);
-			if(currentLocation === "q"){
-				navigate(`/q2/${nextQuestion}`);
+			//Jika User Menjawab Tidak
+		} else if (answer === 'no') {
+			nextQuestion = question.substring(1);
+			console.log(question.substring(1));
+			if (nextQuestion === '') {
+				navigate(`/riwayat`);
 			} else {
-				navigate(`/q/${nextQuestion}`);
+				setQuestion(nextQuestion)
 			}
 		}
 	};

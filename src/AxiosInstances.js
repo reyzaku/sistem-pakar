@@ -9,7 +9,6 @@ export const publicRequest = axios.create({
 });
 
 export const authRequest = axios.create({
-	withCredentials: true,
     baseURL: BASE_URL,
     withCredentials: true,
 });
