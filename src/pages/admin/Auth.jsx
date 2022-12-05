@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/AuthCall';
 
 const Auth = () => {
 	const [user, setUser] = useState({})
 	const dispatch = useDispatch()
+
+	const currentUser = useSelector((state) => state.user);
 
 	const LoginHandle = (event) => {
 		event.preventDefault();
@@ -13,6 +15,7 @@ const Auth = () => {
 
 	return (
 		<div>
+			
 			<section class="">
 				<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 					<div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
@@ -59,6 +62,7 @@ const Auth = () => {
 										required=""
 									/>
 								</div>
+								{currentUser.message !== "" && <div className='text-red-500 text-sm '>Data akun yang dimasukan Salah</div>}
 								<button
 									type="submit"
 									onClick={LoginHandle}

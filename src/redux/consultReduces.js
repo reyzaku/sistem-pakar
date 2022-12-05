@@ -4,6 +4,7 @@ const consultSlice = createSlice({
     name: "user",
     initialState: {
         disease: "",
+        symptom: "",
         nextQuestion: "",
         precentage: 0
         
@@ -11,8 +12,9 @@ const consultSlice = createSlice({
     reducers: {
         consultYes:(state, action)=>{
             state.disease = action.payload.disease
+            state.symptom = action.payload.symptom
             state.nextQuestion = action.payload.nextQuestion
-            state.precentage+= 1
+            state.precentage++
         },
         consultReset:(state)=> {
             state.disease = ""

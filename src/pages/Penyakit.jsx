@@ -22,7 +22,7 @@ const Penyakit = () => {
 		};
 		getData();
 	}, []);
-	console.log(penyakit);
+
 	return (
 		<div className="flex flex-col gap-24 justify-center items-center mt-16">
 			{/* Penyakit Thumbnail */}

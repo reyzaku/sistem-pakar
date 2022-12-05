@@ -4,6 +4,7 @@ const userSlice = createSlice({
     name: "user",
     initialState: {
         currentUser: null,
+        message: "",
         isFetching: false,
         error: false
     },

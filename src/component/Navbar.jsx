@@ -50,8 +50,8 @@ const Navbar = () => {
 							<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 								<div className="flex flex-shrink-0 items-center">
 									{/* Hapus atau comment tag dibawah ini jika ingin menggunakan logo Image */}
-									<Link to={'/'} className="text-white">
-										SISTEM PAKAR
+									<Link to={'/'} className="text-white font-bold text-2xl">
+										SIAKARDI
 									</Link>
 
 									{/* Hapus atau comment tag dibawah ini jika ingin menggunakan logo Text */}

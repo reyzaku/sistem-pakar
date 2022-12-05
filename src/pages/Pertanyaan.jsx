@@ -9,6 +9,7 @@ const Pertanyaan = () => {
 	const [data, setData] = useState([]);
 	const { id } = useParams();
 	const [question, setQuestion] = useState(id);
+	console.log(question)
 
 	const consult = useSelector((state) => state.consult);
 
@@ -43,7 +44,7 @@ const Pertanyaan = () => {
 			switch (consult.nextQuestion) {
 				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 				case '':
-					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' }));
+					dispatch(consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'leaf' }));
 					nextQuestion = question.charAt(0);
 					setQuestion(nextQuestion);
 					break;
@@ -61,12 +62,11 @@ const Pertanyaan = () => {
 						navigate(`/hasil/${consult.disease}`);
 					} else {
 						dispatch(
-							consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' })
+							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId,  nextQuestion: 'fruit' })
 						);
 						nextQuestion = question.charAt(0);
 						setQuestion(nextQuestion);
 					}
-
 					break;
 
 				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
@@ -77,7 +77,7 @@ const Pertanyaan = () => {
 						navigate(`/hasil/${consult.disease}`);
 					} else {
 						dispatch(
-							consultYes({ disease: id.charAt(0), nextQuestion: 'root' })
+							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'root' })
 						);
 						nextQuestion = question.charAt(0);
 						setQuestion(nextQuestion);
@@ -86,7 +86,7 @@ const Pertanyaan = () => {
 
 				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
 				case 'root':
-					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'end' }));
+					dispatch(consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'end' }));
 					nextQuestion = question.charAt(0);
 					navigate(`/hasil/${consult.disease}`);
 					break;
@@ -96,13 +96,15 @@ const Pertanyaan = () => {
 
 			//Jika User Menjawab Tidak
 		} else if (answer === 'no') {
+
 			//Jika Sudah Menjawab Iya pada Pertanyaan Batang lalu menjawab tidak
 			if (consult.nextQuestion !== '') {
 				switch (consult.nextQuestion) {
+
 					//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 					case '':
 						dispatch(
-							consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' })
+							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'leaf' })
 						);
 						nextQuestion = question.charAt(0);
 						setQuestion(nextQuestion);
@@ -110,18 +112,21 @@ const Pertanyaan = () => {
 
 					//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 					case 'leaf':
+
 						//Kalau Gejala pada fruit kosong
 						if (data[0].fruit === null) {
+
 							// dispatch(consultReset())
 							navigate(`/hasil/${consult.disease}`);
 
 							//Kalau Gejala pada fruit & root kosong
 						} else if (data[0].fruit === null && data[0].root === null) {
+
 							// dispatch(consultReset())
 							navigate(`/hasil/${consult.disease}`);
 						} else {
 							dispatch(
-								consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' })
+								consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'fruit' })
 							);
 							nextQuestion = question.charAt(0);
 							setQuestion(nextQuestion);
@@ -137,7 +142,7 @@ const Pertanyaan = () => {
 							navigate(`/hasil/${consult.disease}`);
 						} else {
 							dispatch(
-								consultYes({ disease: id.charAt(0), nextQuestion: 'root' })
+								consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'root' })
 							);
 							nextQuestion = question.charAt(0);
 							setQuestion(nextQuestion);
@@ -147,7 +152,7 @@ const Pertanyaan = () => {
 					//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
 					case 'root':
 						dispatch(
-							consultYes({ disease: id.charAt(0), nextQuestion: 'end' })
+							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'end' })
 						);
 						nextQuestion = question.charAt(0);
 						navigate(`/hasil/${consult.disease}`);
@@ -158,6 +163,7 @@ const Pertanyaan = () => {
 			} else {
 				//Jika Belum menjawab iya sebelumnya
 				nextQuestion = question.substring(1);
+				console.log("MENOLAK!")
 
 				//Jika User menjawab Tidak dan pilihan penyakit sudah habis
 				if (nextQuestion === '') {
