@@ -95,6 +95,9 @@ const TambahPenyakit = () => {
 											name="file-upload"
 											type="file"
 											className="sr-only"
+											onChange={(e) =>
+												setPenyakit({ ...penyakit, image_url: e.target.value})
+											}
 										/>
 									</label>
 									<p className="pl-1">or drag and drop</p>
