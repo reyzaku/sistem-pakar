@@ -29,7 +29,11 @@ const EditPenyakit = () => {
 	const submitHandle = (e) => {
 		e.preventDefault();
 		authRequest
-			.put(`/disease/${penyakit.id}`)
+			.put(`/diseases/${penyakit.id}`, penyakit, {
+				headers: {
+					'content-type': 'multipart/form-data'
+				}
+			})
 			.then(() => {
 				navigate(`/admin/manage`);
 			})
@@ -105,6 +109,7 @@ const EditPenyakit = () => {
 											name="file-upload"
 											type="file"
 											className="sr-only"
+											onChange={(e) => setPenyakit({ ...penyakit, image_url: e.target.files[0]})}
 										/>
 									</label>
 									<p className="pl-1">or drag and drop</p>

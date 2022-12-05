@@ -27,7 +27,7 @@ const EditGejala = () => {
 	const submitHandle = (e) => {
 		e.preventDefault();
 		authRequest
-			.put(`/symptoms/${gejala.id}`)
+			.put(`/symptoms/${gejala.id}`, gejala)
 			.then(() => {
 				navigate('/admin/manage');
 			})

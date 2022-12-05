@@ -30,7 +30,8 @@ const MainRouter = () => {
 			<Route path="/konsultasi" element={<PertanyaanPertama />} />
 			<Route path="/q/:id" element={<Pertanyaan />} />
 			<Route path="/q2/:id" element={<Pertanyaan />} />
-			<Route path="/hasil" element={<HasilDiagnosa />} />
+			<Route path="/hasil/:id" element={<HasilDiagnosa />} />
+			<Route path="/hasil" element={<HasilDiagnosa data={null} />} />
 			<Route path="/riwayat" element={<RiwayatKonsultasi />} />
 
 			{/* Admin Pages */}

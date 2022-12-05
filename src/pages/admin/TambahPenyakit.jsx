@@ -16,9 +16,13 @@ const TambahPenyakit = () => {
 		e.preventDefault()
 		setIsOpen(false)
 		authRequest
-			.post('/diseases', penyakit)
+			.post('/diseases', penyakit, {
+				headers: {
+					'content-type': 'multipart/form-data'
+				}
+			})
 			.then(() => {
-				navigate(`/admin/add/gejala`);
+				navigate(`/admin/tambah/gejala`);
 			})
 			.catch((error) => {
 				setErr(error)
@@ -26,6 +30,7 @@ const TambahPenyakit = () => {
 			});
 	};
 	
+	console.log(penyakit)
 	
 	return (
 		<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -96,13 +101,13 @@ const TambahPenyakit = () => {
 											type="file"
 											className="sr-only"
 											onChange={(e) =>
-												setPenyakit({ ...penyakit, image_url: e.target.value})
+												setPenyakit({ ...penyakit, image_url: e.target.files[0]})
 											}
 										/>
 									</label>
 									<p className="pl-1">or drag and drop</p>
 								</div>
-								<p className="text-xs text-gray-500">
+								<p className="text-xs text-gray-500">	
 									PNG, JPG, GIF up to 10MB
 								</p>
 							</div>

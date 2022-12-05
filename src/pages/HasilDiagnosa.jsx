@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HasilDiagnosa = () => {
+const HasilDiagnosa = (props) => {
 	return (
 		<div className="mt-16">
 			<h1 className="text-4xl font-bold text-indigo-900 text-center mb-4">

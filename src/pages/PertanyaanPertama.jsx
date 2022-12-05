@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { publicRequest } from '../AxiosInstances';
+import { consultReset } from '../redux/consultReduces';
 
 const PertanyaanPertama = () => {
+
+	const consult = useSelector((state) => state.consult);
+
     //Storing Data
 	const [data, setData] = useState([]);
 
@@ -14,11 +19,13 @@ const PertanyaanPertama = () => {
 
     //Storing Value of Checked Checkbox
     const [question, setQuestion] = useState([])
-    console.log(question)
+    
+	const dispatch = useDispatch()
 
 
     //Fetching First Data
 	useEffect(() => {
+		dispatch(consultReset())
 		const getData = async () => {
 			try {
 				const res = await publicRequest.get(`/symptoms`);

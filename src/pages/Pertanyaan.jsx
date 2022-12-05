@@ -41,7 +41,6 @@ const Pertanyaan = () => {
 		//Jika User Klik Iya
 		if (answer === 'yes') {
 			switch (consult.nextQuestion) {
-
 				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 				case '':
 					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' }));
@@ -51,33 +50,35 @@ const Pertanyaan = () => {
 
 				//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 				case 'leaf':
-
 					//Kalau Gejala pada fruit kosong
 					if (data[0].fruit === null) {
-						dispatch(consultReset())
-						navigate(`/riwayat`);
+						// dispatch(consultReset())
+						navigate(`/hasil/${consult.disease}`);
 
-					//Kalau Gejala pada fruit & root kosong
+						//Kalau Gejala pada fruit & root kosong
 					} else if (data[0].fruit === null && data[0].root === null) {
-						dispatch(consultReset())
-						navigate(`/riwayat`);
+						// dispatch(consultReset())
+						navigate(`/hasil/${consult.disease}`);
 					} else {
-						dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' }));
+						dispatch(
+							consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' })
+						);
 						nextQuestion = question.charAt(0);
 						setQuestion(nextQuestion);
 					}
-					
+
 					break;
 
 				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
 				case 'fruit':
-
 					//Kalau Gejala pada root kosong
 					if (data[0].root === null) {
-						dispatch(consultReset())
-						navigate(`/riwayat`);
+						// dispatch(consultReset())
+						navigate(`/hasil/${consult.disease}`);
 					} else {
-						dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'root' }));
+						dispatch(
+							consultYes({ disease: id.charAt(0), nextQuestion: 'root' })
+						);
 						nextQuestion = question.charAt(0);
 						setQuestion(nextQuestion);
 					}
@@ -87,31 +88,82 @@ const Pertanyaan = () => {
 				case 'root':
 					dispatch(consultYes({ disease: id.charAt(0), nextQuestion: 'end' }));
 					nextQuestion = question.charAt(0);
-					navigate(`/riwayat`);
+					navigate(`/hasil/${consult.disease}`);
 					break;
 				default:
 					break;
 			}
 
-		//Jika User Menjawab Tidak
+			//Jika User Menjawab Tidak
 		} else if (answer === 'no') {
+			//Jika Sudah Menjawab Iya pada Pertanyaan Batang lalu menjawab tidak
+			if (consult.nextQuestion !== '') {
+				switch (consult.nextQuestion) {
+					//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
+					case '':
+						dispatch(
+							consultYes({ disease: id.charAt(0), nextQuestion: 'leaf' })
+						);
+						nextQuestion = question.charAt(0);
+						setQuestion(nextQuestion);
+						break;
 
-			//Jika Sudah Menjawab Iya pada Pertanyaan Batang
-			if(consult.nextQuestion !== ""){
+					//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
+					case 'leaf':
+						//Kalau Gejala pada fruit kosong
+						if (data[0].fruit === null) {
+							// dispatch(consultReset())
+							navigate(`/hasil/${consult.disease}`);
 
-				// NEED LOGIC HERE
+							//Kalau Gejala pada fruit & root kosong
+						} else if (data[0].fruit === null && data[0].root === null) {
+							// dispatch(consultReset())
+							navigate(`/hasil/${consult.disease}`);
+						} else {
+							dispatch(
+								consultYes({ disease: id.charAt(0), nextQuestion: 'fruit' })
+							);
+							nextQuestion = question.charAt(0);
+							setQuestion(nextQuestion);
+						}
 
+						break;
+
+					//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
+					case 'fruit':
+						//Kalau Gejala pada root kosong
+						if (data[0].root === null) {
+							// dispatch(consultReset())
+							navigate(`/hasil/${consult.disease}`);
+						} else {
+							dispatch(
+								consultYes({ disease: id.charAt(0), nextQuestion: 'root' })
+							);
+							nextQuestion = question.charAt(0);
+							setQuestion(nextQuestion);
+						}
+						break;
+
+					//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
+					case 'root':
+						dispatch(
+							consultYes({ disease: id.charAt(0), nextQuestion: 'end' })
+						);
+						nextQuestion = question.charAt(0);
+						navigate(`/hasil/${consult.disease}`);
+						break;
+					default:
+						break;
+				}
 			} else {
-
 				//Jika Belum menjawab iya sebelumnya
 				nextQuestion = question.substring(1);
 
 				//Jika User menjawab Tidak dan pilihan penyakit sudah habis
 				if (nextQuestion === '') {
-					navigate(`/riwayat`);
+					navigate(`/hasil/${consult.disease}`);
 				} else {
-					
-				//Jika User menjawab Tidak dan pilihan penyakit masih ada
+					//Jika User menjawab Tidak dan pilihan penyakit masih ada
 					setQuestion(nextQuestion);
 				}
 			}
