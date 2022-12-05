@@ -16,7 +16,7 @@ const TambahPenyakit = () => {
 		e.preventDefault()
 		setIsOpen(false)
 		authRequest
-			.post('/diseases')
+			.post('/diseases', penyakit)
 			.then(() => {
 				navigate(`/admin/add/gejala`);
 			})

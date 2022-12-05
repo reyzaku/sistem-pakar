@@ -23,42 +23,6 @@ const RiwayatKonsultasi = () => {
 							<td className="py-4 px-6">-</td>
 							<td className="py-4 px-6">-</td>
 						</tr>
-
-						<tr className="bg-white border-b">
-							<td className="py-4 px-6">G0002</td>
-							<td className="py-4 px-6">
-								Apakah terdapat batang yang patah pada tanaman padi?
-							</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-						<tr className="bg-white border-b">
-							<td className="py-4 px-6">G0003</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">
-								Apakah daun padi mengalami kerusakan?
-							</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-						<tr className="bg-white border-b">
-							<td className="py-4 px-6">G0004</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">Apakah tanaman padi tidak berbuah?</td>
-							<td className="py-4 px-6">-</td>
-						</tr>
-
-						<tr className="bg-white border-b">
-							<td className="py-4 px-6">G0004</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">-</td>
-							<td className="py-4 px-6">Apakah Akar padi membusuk?</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>

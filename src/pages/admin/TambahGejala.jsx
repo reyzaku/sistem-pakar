@@ -18,7 +18,7 @@ const TambahGejala = () => {
 		e.preventDefault();
 		setIsOpen(false)
 		publicRequest
-			.post('/symptoms')
+			.post('/symptoms', gejala)
 			.then(() => {
 				navigate('/gejala');
 			})
