@@ -5,32 +5,43 @@ import { authRequest, publicRequest } from '../../AxiosInstances';
 const Manage = () => {
 	//Storing Data Penyakit
 	const [penyakit, setPenyakit] = useState([]);
+	const [gejala, setGejala] = useState([]);
 
 	//Storing Fetching Error
-	const [err, setErr] = useState(null);
+	const [err, setErr] = useState({});
 
 	const [popUp, setPopUp] = useState(false);
 
 	useEffect(() => {
-		const getData = async () => {
+		const getPenyakit = async () => {
 			try {
 				const res = await publicRequest.get(`/diseases`);
 				setPenyakit(res.data.data);
-			} catch (err) {
-				setErr('Err');
+			} catch (error) {
+				setErr({ ...error, penyakit: error });
 			}
 		};
-		getData();
+		getPenyakit();
+
+		const getGejala = async () => {
+			try {
+				const res = await publicRequest.get(`/symptoms`);
+				setGejala(res.data.data);
+			} catch (error) {
+				setErr({ ...error, gejala: error });
+			}
+		};
+		getGejala();
 	}, []);
 
 	const clickHandle = (e) => {
 		authRequest
 			.delete(`/diseases/${e.target.name}`)
 			.then(() => {
-				setPopUp(true)
+				setPopUp(true);
 			})
-			.catch((err) => {
-				setErr(err);
+			.catch((error) => {
+				setErr({ ...error, penyakit: error });
 			});
 	};
 
@@ -66,12 +77,6 @@ const Manage = () => {
 									>
 										Edit Penyakit
 									</Link>
-									<Link
-										to={`/admin/edit/gejala/${item.id}`}
-										className="bg-yellow-500 px-8 py-2 text-white text-sm rounded-md"
-									>
-										Edit Gejala
-									</Link>
 									<button
 										onClick={clickHandle}
 										name={item.id}
@@ -82,6 +87,7 @@ const Manage = () => {
 								</td>
 							</tr>
 						))}
+
 					</tbody>
 				</table>
 			</div>

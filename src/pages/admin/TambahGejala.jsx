@@ -20,7 +20,7 @@ const TambahGejala = () => {
 		publicRequest
 			.post('/symptoms', gejala)
 			.then(() => {
-				navigate('/gejala');
+				navigate('/admin/manage');
 			})
 			.catch((error) => {
 				setErr(error);
