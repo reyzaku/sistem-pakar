@@ -1,29 +1,41 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { publicRequest } from '../../AxiosInstances';
+import { authRequest } from '../../AxiosInstances';
 
 const TambahPenyakit = () => {
 	//stored input Value
 	const [penyakit, setPenyakit] = useState({});
 
+	const [isOpen, setIsOpen] = useState(false)
+	const [err, setErr] = useState(null)
+
 	let navigate = useNavigate();
 
 	//Send Value Handler
 	const submitHandle = (e) => {
-        e.preventDefault()
-		publicRequest
-			.post('/symptoms')
+		e.preventDefault()
+		setIsOpen(false)
+		authRequest
+			.post('/diseases')
 			.then(() => {
 				navigate(`/admin/add/gejala`);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				setErr(error)
+				setIsOpen(true)
 			});
 	};
-
+	
+	
 	return (
 		<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <h2 className='mb-16 font-bold text-3xl text-indigo-900'>Tambah Data Penyakit</h2>
+			{isOpen && (
+					<h4 className="text-red-500 font-thin mb-16 text-center">
+						{err.message}<br/>
+						{err.name}
+					</h4>
+				)}
 			<div className="w-full bg-white rounded-l md:mt-0 sm:max-w-md xl:p-0 ">
 				<form action="submit" className="flex flex-col gap-8">
 					<div className="flex flex-col gap-2">

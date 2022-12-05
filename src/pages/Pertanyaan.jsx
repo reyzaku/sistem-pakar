@@ -66,6 +66,7 @@ const Pertanyaan = () => {
 						nextQuestion = question.charAt(0);
 						setQuestion(nextQuestion);
 					}
+					
 					break;
 
 				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root

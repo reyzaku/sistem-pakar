@@ -4,7 +4,6 @@ import { login } from '../../redux/AuthCall';
 
 const Auth = () => {
 	const [user, setUser] = useState({})
-	const [error, setError] = useState("")
 	const dispatch = useDispatch()
 
 	const LoginHandle = (event) => {
