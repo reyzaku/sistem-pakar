@@ -28,10 +28,8 @@ const MainRouter = () => {
 			<Route path="/gejala" element={<DaftarGejala />} />
 			<Route path="/gejala/gejala" element={<Penyakit />} />
 			<Route path="/konsultasi" element={<PertanyaanPertama />} />
-			<Route path="/q/:id" element={<Pertanyaan />} />
-			<Route path="/q2/:id" element={<Pertanyaan />} />
-			<Route path="/hasil/:id" element={<HasilDiagnosa />} />
-			<Route path="/hasil" element={<HasilDiagnosa data={null} />} />
+			<Route path="/q" element={<Pertanyaan />} />
+			<Route path="/hasil" element={<HasilDiagnosa />} />
 			<Route path="/riwayat" element={<RiwayatKonsultasi />} />
 
 			{/* Admin Pages */}

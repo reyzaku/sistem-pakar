@@ -2,16 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { publicRequest } from '../AxiosInstances';
-import { consultReset, consultYes } from '../redux/consultReduces';
+import {
+	consultAddPrecentage,
+	consultNo,
+	consultReset,
+	consultYes,
+} from '../redux/consultReduces';
 
 const Pertanyaan = () => {
-	//Storing Data
-	const [data, setData] = useState([]);
-	const { id } = useParams();
-	const [question, setQuestion] = useState(id);
-	console.log(question)
-
+	//Get Data from Redux
 	const consult = useSelector((state) => state.consult);
+
+	//Stored Fetched Data
+	const [data, setData] = useState([]);
+
+	//Get Params
+	const { id } = useParams();
+
+	//Initiate Question from redux
+	const [question, setQuestion] = useState(consult.question);
+	console.log(question);
 
 	const location = useLocation();
 	const currentLocation = location.pathname.split('/')[1];
@@ -22,10 +32,11 @@ const Pertanyaan = () => {
 	let navigate = useNavigate();
 	let dispatch = useDispatch();
 
+	//Fetching Data
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const res = await publicRequest.get(`/symptoms/${question}`);
+				const res = await publicRequest.get(`/symptoms/${question[0]}`);
 				setData(res.data.data);
 				console.log(res.data);
 			} catch (err) {
@@ -35,6 +46,7 @@ const Pertanyaan = () => {
 		getData();
 	}, [question, setQuestion]);
 
+	//Function which Handle Answer
 	const Answer = (event) => {
 		let answer = event.target.name;
 		let nextQuestion = '';
@@ -44,28 +56,34 @@ const Pertanyaan = () => {
 			switch (consult.nextQuestion) {
 				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 				case '':
-					dispatch(consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'leaf' }));
-					nextQuestion = question.charAt(0);
-					setQuestion(nextQuestion);
+					dispatch(
+						consultYes({
+							symptom: question[0],
+							disease: data[0].diseaseId,
+							nextQuestion: 'leaf',
+						})
+					);
 					break;
 
 				//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 				case 'leaf':
 					//Kalau Gejala pada fruit kosong
 					if (data[0].fruit === null) {
-						// dispatch(consultReset())
-						navigate(`/hasil/${consult.disease}`);
+						dispatch(consultAddPrecentage);
+						navigate(`/hasil`);
 
 						//Kalau Gejala pada fruit & root kosong
 					} else if (data[0].fruit === null && data[0].root === null) {
-						// dispatch(consultReset())
-						navigate(`/hasil/${consult.disease}`);
+						dispatch(consultAddPrecentage);
+						navigate(`/hasil`);
 					} else {
 						dispatch(
-							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId,  nextQuestion: 'fruit' })
+							consultYes({
+								symptom: question[0],
+								disease: data[0].diseaseId,
+								nextQuestion: 'fruit',
+							})
 						);
-						nextQuestion = question.charAt(0);
-						setQuestion(nextQuestion);
 					}
 					break;
 
@@ -73,22 +91,29 @@ const Pertanyaan = () => {
 				case 'fruit':
 					//Kalau Gejala pada root kosong
 					if (data[0].root === null) {
-						// dispatch(consultReset())
-						navigate(`/hasil/${consult.disease}`);
+						dispatch(consultAddPrecentage);
+						navigate(`/hasil`);
 					} else {
 						dispatch(
-							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'root' })
+							consultYes({
+								symptom: question[0],
+								disease: data[0].diseaseId,
+								nextQuestion: 'root',
+							})
 						);
-						nextQuestion = question.charAt(0);
-						setQuestion(nextQuestion);
 					}
 					break;
 
 				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
 				case 'root':
-					dispatch(consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'end' }));
-					nextQuestion = question.charAt(0);
-					navigate(`/hasil/${consult.disease}`);
+					dispatch(
+						consultYes({
+							symptom: question[0],
+							disease: data[0].diseaseId,
+							nextQuestion: 'end',
+						})
+					);
+					navigate(`/hasil`);
 					break;
 				default:
 					break;
@@ -96,40 +121,51 @@ const Pertanyaan = () => {
 
 			//Jika User Menjawab Tidak
 		} else if (answer === 'no') {
-
 			//Jika Sudah Menjawab Iya pada Pertanyaan Batang lalu menjawab tidak
 			if (consult.nextQuestion !== '') {
 				switch (consult.nextQuestion) {
-
 					//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 					case '':
 						dispatch(
-							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'leaf' })
+							consultNo({
+								symptom: question[0],
+								disease: data[0].diseaseId,
+								nextQuestion: 'leaf',
+							})
 						);
-						nextQuestion = question.charAt(0);
-						setQuestion(nextQuestion);
 						break;
 
 					//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 					case 'leaf':
-
 						//Kalau Gejala pada fruit kosong
 						if (data[0].fruit === null) {
-
-							// dispatch(consultReset())
-							navigate(`/hasil/${consult.disease}`);
+							dispatch(
+								consultNo({
+									symptom: question[0],
+									disease: data[0].diseaseId,
+									nextQuestion: 'fruit',
+								})
+							);
+							navigate(`/hasil`);
 
 							//Kalau Gejala pada fruit & root kosong
 						} else if (data[0].fruit === null && data[0].root === null) {
-
-							// dispatch(consultReset())
-							navigate(`/hasil/${consult.disease}`);
+							dispatch(
+								consultNo({
+									symptom: question[0],
+									disease: data[0].diseaseId,
+									nextQuestion: 'fruit',
+								})
+							);
+							navigate(`/hasil`);
 						} else {
 							dispatch(
-								consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'fruit' })
+								consultNo({
+									symptom: question[0],
+									disease: data[0].diseaseId,
+									nextQuestion: 'fruit',
+								})
 							);
-							nextQuestion = question.charAt(0);
-							setQuestion(nextQuestion);
 						}
 
 						break;
@@ -138,36 +174,48 @@ const Pertanyaan = () => {
 					case 'fruit':
 						//Kalau Gejala pada root kosong
 						if (data[0].root === null) {
-							// dispatch(consultReset())
-							navigate(`/hasil/${consult.disease}`);
+							dispatch(
+								consultNo({
+									symptom: question[0],
+									disease: data[0].diseaseId,
+									nextQuestion: 'fruit',
+								})
+							);
+							navigate(`/hasil`);
 						} else {
 							dispatch(
-								consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'root' })
+								consultNo({
+									symptom: question[0],
+									disease: data[0].diseaseId,
+									nextQuestion: 'root',
+								})
 							);
-							nextQuestion = question.charAt(0);
-							setQuestion(nextQuestion);
 						}
 						break;
 
 					//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
 					case 'root':
 						dispatch(
-							consultYes({ symptom: question.charAt(0), disease: data[0].diseaseId, nextQuestion: 'end' })
-						);
-						nextQuestion = question.charAt(0);
-						navigate(`/hasil/${consult.disease}`);
+							consultNo({
+								symptom: question[0],
+								disease: data[0].diseaseId,
+								nextQuestion: 'end',
+							})
+						)
+						navigate(`/hasil`);
 						break;
 					default:
 						break;
 				}
 			} else {
 				//Jika Belum menjawab iya sebelumnya
-				nextQuestion = question.substring(1);
-				console.log("MENOLAK!")
+				nextQuestion = question.slice(1)
+				console.log('MENOLAK!');
+				console.log(nextQuestion)
 
 				//Jika User menjawab Tidak dan pilihan penyakit sudah habis
-				if (nextQuestion === '') {
-					navigate(`/hasil/${consult.disease}`);
+				if (nextQuestion.length <= 0) {
+					navigate(`/hasil`);
 				} else {
 					//Jika User menjawab Tidak dan pilihan penyakit masih ada
 					setQuestion(nextQuestion);
