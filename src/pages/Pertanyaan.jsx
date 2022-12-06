@@ -56,23 +56,47 @@ const Pertanyaan = () => {
 			switch (consult.nextQuestion) {
 				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 				case '':
-					dispatch(
-						consultYes({
-							symptom: question[0],
-							disease: data.diseaseId,
-							nextQuestion: 'leaf',
-						})
-					);
+					if (data.leaf === null) {
+						dispatch(
+							consultYes({
+								symptom: question[0],
+								disease: data.diseaseId,
+								nextQuestion: 'fruit',
+							})
+						);
+					} else if (data.leaf === null && data.fruit === null) {
+						dispatch(
+							consultYes({
+								symptom: question[0],
+								disease: data.diseaseId,
+								nextQuestion: 'root',
+							})
+						);
+					} else {
+						dispatch(
+							consultYes({
+								symptom: question[0],
+								disease: data.diseaseId,
+								nextQuestion: 'leaf',
+							})
+						);
+					}
 					break;
 
 				//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 				case 'leaf':
-					//Kalau Gejala pada fruit kosong
-					if (data.fruit === null) {
-						dispatch(consultAddPrecentage);
-						navigate(`/hasil`);
 
-						//Kalau Gejala pada fruit & root kosong
+					//Kalau Gejala pada fruit kosong & root tidak kosong
+					if (data.fruit === null && data.root !== null) {
+						dispatch(
+							consultYes({
+								symptom: question[0],
+								disease: data.diseaseId,
+								nextQuestion: 'root',
+							})
+						);
+
+					// Kalau Gejala pada fruit kosong & root kosong
 					} else if (data.fruit === null && data.root === null) {
 						dispatch(consultAddPrecentage);
 						navigate(`/hasil`);
@@ -89,6 +113,7 @@ const Pertanyaan = () => {
 
 				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
 				case 'fruit':
+
 					//Kalau Gejala pada root kosong
 					if (data.root === null) {
 						dispatch(consultAddPrecentage);
@@ -104,7 +129,7 @@ const Pertanyaan = () => {
 					}
 					break;
 
-				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman riwayat
+				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman Hasil
 				case 'root':
 					dispatch(
 						consultYes({
@@ -121,9 +146,11 @@ const Pertanyaan = () => {
 
 			//Jika User Menjawab Tidak
 		} else if (answer === 'no') {
+
 			//Jika Sudah Menjawab Iya pada Pertanyaan Batang lalu menjawab tidak
 			if (consult.nextQuestion !== '') {
 				switch (consult.nextQuestion) {
+
 					//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 					case '':
 						dispatch(
@@ -137,16 +164,16 @@ const Pertanyaan = () => {
 
 					//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 					case 'leaf':
-						//Kalau Gejala pada fruit kosong
-						if (data.fruit === null) {
+
+						//Kalau Gejala pada fruit kosong & root tidak kosong
+						if (data.fruit === null && data.root !== null) {
 							dispatch(
 								consultNo({
 									symptom: question[0],
 									disease: data.diseaseId,
-									nextQuestion: 'fruit',
+									nextQuestion: 'root',
 								})
 							);
-							navigate(`/hasil`);
 
 							//Kalau Gejala pada fruit & root kosong
 						} else if (data.fruit === null && data.root === null) {
@@ -172,6 +199,7 @@ const Pertanyaan = () => {
 
 					//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
 					case 'fruit':
+
 						//Kalau Gejala pada root kosong
 						if (data.root === null) {
 							dispatch(
@@ -201,7 +229,7 @@ const Pertanyaan = () => {
 								disease: data.diseaseId,
 								nextQuestion: 'end',
 							})
-						)
+						);
 						navigate(`/hasil`);
 						break;
 					default:
@@ -209,14 +237,15 @@ const Pertanyaan = () => {
 				}
 			} else {
 				//Jika Belum menjawab iya sebelumnya
-				nextQuestion = question.slice(1)
+				nextQuestion = question.slice(1);
 				console.log('MENOLAK!');
-				console.log(nextQuestion)
+				console.log(nextQuestion);
 
 				//Jika User menjawab Tidak dan pilihan penyakit sudah habis
 				if (nextQuestion.length <= 0) {
 					navigate(`/hasil`);
 				} else {
+					
 					//Jika User menjawab Tidak dan pilihan penyakit masih ada
 					setQuestion(nextQuestion);
 				}
@@ -266,7 +295,6 @@ const Pertanyaan = () => {
 			</div>
 		</div>
 	);
-
 };
 
 export default Pertanyaan;
