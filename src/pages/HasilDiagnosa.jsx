@@ -9,23 +9,22 @@ const HasilDiagnosa = () => {
 
 	//Store Data from fetch
 	const [penyakit, setPenyakit] = useState({});
-	const [gejala, setGejala] = useState({});
 
 	//Storing Fetching Error
 	const [err, setErr] = useState(null);
 
 	//Fetch Data
 	useEffect(() => {
-		const getData = async () => {
-			try {
-				const res = await publicRequest.get(`/diseases/${consult.disease}`);
-				setPenyakit(res.data.data);
-				console.log(res.data.data)
-			} catch (error) {
-				setErr(error);
+		const getDataDisease = async () => {
+			try{
+				const resDisease = await publicRequest.get(`/diseases/${consult.disease}`);
+				setPenyakit(resDisease.data.data);
+				console.log(resDisease.data.data)
+			}catch (error) {
+				setErr({...err, disease: error})
 			}
-		};
-		getData();
+		}
+		getDataDisease()
 	}, []);
 
 	return (
@@ -45,7 +44,7 @@ const HasilDiagnosa = () => {
 				</div>
 			) : (
 				<div className="mt-16">
-					{penyakit === null ? (
+					{Object.keys(penyakit).length === 0 ? (
 						<></>
 					) : (
 						<>
@@ -65,37 +64,42 @@ const HasilDiagnosa = () => {
 											</td>
 										</tr>
 
-										{/* <tr className="bg-white border-b">
+										<tr className="bg-white border-b">
 											<td className="py-4 px-6 font-bold">Gejala</td>
 											<td className="py-4 px-6">
 												{penyakit?.symptom[0].stem !== null ? (
-													<p>{penyakit.symptom[0].stem}</p>
+													<li>{penyakit.symptom[0].stem}</li>
 												) : (
 													<></>
 												)}
 												{penyakit?.symptom[0].leaf !== null ? (
-													<p>{penyakit.symptom[0].leaf}</p>
+													<li>{penyakit.symptom[0].leaf}</li>
 												) : (
 													<></>
 												)}
 												{penyakit?.symptom[0].fruit !== null ? (
-													<p>{penyakit.symptom[0].fruit}</p>
+													<li>{penyakit.symptom[0].fruit}</li>
 												) : (
 													<></>
 												)}
 												{penyakit?.symptom[0].root !== null ? (
-													<p className="w-full bg-yellow-500 text-white rounded-xl py-2 px-8 hover:bg-yellow-600 transition-all ease-in-out">
+													<li>
 														{penyakit.symptom[0].root}
-													</p>
+													</li>
 												) : (
 													<></>
 												)}
 											</td>
-										</tr> */}
+										</tr>
 
 										<tr className="bg-white border-b">
 											<td className="py-4 px-6 font-bold">Solusi</td>
 											<td className="py-4 px-6">{penyakit.solution}</td>
+										</tr>
+
+										<tr className="bg-white border-b">
+											<td className="py-4 px-6 font-bold">Presentase</td>
+											<td className="py-4 px-6 text-red-500 font-bold">{(consult.totalYes / consult.totalNo) * 100}%</td>
 										</tr>
 									</tbody>
 								</table>

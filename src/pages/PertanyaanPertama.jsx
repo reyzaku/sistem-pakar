@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { publicRequest } from '../AxiosInstances';
-import { consultReset } from '../redux/consultReduces';
+import { consultInitiate, consultReset } from '../redux/consultReduces';
 
 const PertanyaanPertama = () => {
 
@@ -21,6 +21,8 @@ const PertanyaanPertama = () => {
     const [question, setQuestion] = useState([])
     
 	const dispatch = useDispatch()
+
+	const navigate = useNavigate()
 
 
     //Fetching First Data
@@ -58,9 +60,16 @@ const PertanyaanPertama = () => {
             
         )
 
+		//Updating The store on Checked Data
         setCheck(updatedCheckedState)
         setQuestion(temp)
     }
+
+	const clickHandle = () => {
+		console.log(question)
+		dispatch(consultInitiate(question))
+		navigate("/q")
+	}
 
 	return (
 		<div className="flex flex-col gap-24 justify-center items-center mt-16">
@@ -101,9 +110,13 @@ const PertanyaanPertama = () => {
 
 			{/* Answer */}
 			<div className="flex justify-center items-center gap-24">
-				<Link to={`/q/${question.join("")}`} className="bg-green-500 text-white w-32 h-16 rounded-xl font-semibold hover:bg-green-600 flex justify-center items-center">
+				{/* <Link to={`/q/${question.join("")}`} className="bg-green-500 text-white w-32 h-16 rounded-xl font-semibold hover:bg-green-600 flex justify-center items-center">
 					Iya
-				</Link>
+				</Link> */}
+
+				<button onClick={clickHandle} className="bg-green-500 text-white w-32 h-16 rounded-xl font-semibold hover:bg-green-600 flex justify-center items-center">
+					Iya
+				</button>
 			</div>
 		</div>
 	);

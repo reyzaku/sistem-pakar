@@ -26,7 +26,6 @@ const MainRouter = () => {
   useEffect(() => {
     dispatch(me());
   }, [dispatch]);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -34,16 +33,14 @@ const MainRouter = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Homepage />} />
-      <Route path="/penyakit" element={<DaftarPenyakit />} />
-      <Route path="/penyakit/:id" element={<Penyakit />} />
-      <Route path="/gejala" element={<DaftarGejala />} />
-      <Route path="/gejala/gejala" element={<Penyakit />} />
-      <Route path="/konsultasi" element={<PertanyaanPertama />} />
-      <Route path="/q/:id" element={<Pertanyaan />} />
-      <Route path="/q2/:id" element={<Pertanyaan />} />
-      <Route path="/hasil/:id" element={<HasilDiagnosa />} />
-      <Route path="/hasil" element={<HasilDiagnosa data={null} />} />
-      <Route path="/riwayat" element={<RiwayatKonsultasi />} />
+			<Route path="/penyakit" element={<DaftarPenyakit />} />
+			<Route path="/penyakit/:id" element={<Penyakit />} />
+			<Route path="/gejala" element={<DaftarGejala />} />
+			<Route path="/gejala/gejala" element={<Penyakit />} />
+			<Route path="/konsultasi" element={<PertanyaanPertama />} />
+			<Route path="/q" element={<Pertanyaan />} />
+			<Route path="/hasil" element={<HasilDiagnosa />} />
+			<Route path="/riwayat" element={<RiwayatKonsultasi />} />
 
       {/* Admin Pages */}
       <Route
