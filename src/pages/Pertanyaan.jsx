@@ -59,7 +59,7 @@ const Pertanyaan = () => {
 					dispatch(
 						consultYes({
 							symptom: question[0],
-							disease: data[0].diseaseId,
+							disease: data.diseaseId,
 							nextQuestion: 'leaf',
 						})
 					);
@@ -68,19 +68,19 @@ const Pertanyaan = () => {
 				//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 				case 'leaf':
 					//Kalau Gejala pada fruit kosong
-					if (data[0].fruit === null) {
+					if (data.fruit === null) {
 						dispatch(consultAddPrecentage);
 						navigate(`/hasil`);
 
 						//Kalau Gejala pada fruit & root kosong
-					} else if (data[0].fruit === null && data[0].root === null) {
+					} else if (data.fruit === null && data.root === null) {
 						dispatch(consultAddPrecentage);
 						navigate(`/hasil`);
 					} else {
 						dispatch(
 							consultYes({
 								symptom: question[0],
-								disease: data[0].diseaseId,
+								disease: data.diseaseId,
 								nextQuestion: 'fruit',
 							})
 						);
@@ -90,14 +90,14 @@ const Pertanyaan = () => {
 				//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
 				case 'fruit':
 					//Kalau Gejala pada root kosong
-					if (data[0].root === null) {
+					if (data.root === null) {
 						dispatch(consultAddPrecentage);
 						navigate(`/hasil`);
 					} else {
 						dispatch(
 							consultYes({
 								symptom: question[0],
-								disease: data[0].diseaseId,
+								disease: data.diseaseId,
 								nextQuestion: 'root',
 							})
 						);
@@ -109,7 +109,7 @@ const Pertanyaan = () => {
 					dispatch(
 						consultYes({
 							symptom: question[0],
-							disease: data[0].diseaseId,
+							disease: data.diseaseId,
 							nextQuestion: 'end',
 						})
 					);
@@ -129,7 +129,7 @@ const Pertanyaan = () => {
 						dispatch(
 							consultNo({
 								symptom: question[0],
-								disease: data[0].diseaseId,
+								disease: data.diseaseId,
 								nextQuestion: 'leaf',
 							})
 						);
@@ -138,22 +138,22 @@ const Pertanyaan = () => {
 					//Kalau Next Question leaf, maka Pertanyaan selanjutnya fruit
 					case 'leaf':
 						//Kalau Gejala pada fruit kosong
-						if (data[0].fruit === null) {
+						if (data.fruit === null) {
 							dispatch(
 								consultNo({
 									symptom: question[0],
-									disease: data[0].diseaseId,
+									disease: data.diseaseId,
 									nextQuestion: 'fruit',
 								})
 							);
 							navigate(`/hasil`);
 
 							//Kalau Gejala pada fruit & root kosong
-						} else if (data[0].fruit === null && data[0].root === null) {
+						} else if (data.fruit === null && data.root === null) {
 							dispatch(
 								consultNo({
 									symptom: question[0],
-									disease: data[0].diseaseId,
+									disease: data.diseaseId,
 									nextQuestion: 'fruit',
 								})
 							);
@@ -162,7 +162,7 @@ const Pertanyaan = () => {
 							dispatch(
 								consultNo({
 									symptom: question[0],
-									disease: data[0].diseaseId,
+									disease: data.diseaseId,
 									nextQuestion: 'fruit',
 								})
 							);
@@ -173,11 +173,11 @@ const Pertanyaan = () => {
 					//Kalau Next Question fruit, maka Pertanyaan selanjutnya root
 					case 'fruit':
 						//Kalau Gejala pada root kosong
-						if (data[0].root === null) {
+						if (data.root === null) {
 							dispatch(
 								consultNo({
 									symptom: question[0],
-									disease: data[0].diseaseId,
+									disease: data.diseaseId,
 									nextQuestion: 'fruit',
 								})
 							);
@@ -186,7 +186,7 @@ const Pertanyaan = () => {
 							dispatch(
 								consultNo({
 									symptom: question[0],
-									disease: data[0].diseaseId,
+									disease: data.diseaseId,
 									nextQuestion: 'root',
 								})
 							);
@@ -198,7 +198,7 @@ const Pertanyaan = () => {
 						dispatch(
 							consultNo({
 								symptom: question[0],
-								disease: data[0].diseaseId,
+								disease: data.diseaseId,
 								nextQuestion: 'end',
 							})
 						)
@@ -234,13 +234,13 @@ const Pertanyaan = () => {
 					<h3 className="text-4xl font-bold text-indigo-900">
 						Apakah{' '}
 						{consult.nextQuestion === ''
-							? data[0].stem
+							? data.stem
 							: consult.nextQuestion === 'leaf'
-							? data[0].leaf
+							? data.leaf
 							: consult.nextQuestion === 'fruit'
-							? data[0].fruit
+							? data.fruit
 							: consult.nextQuestion === 'root'
-							? data[0].root
+							? data.root
 							: ''}{' '}
 						?
 					</h3>
