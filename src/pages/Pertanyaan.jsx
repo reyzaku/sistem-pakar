@@ -266,6 +266,7 @@ const Pertanyaan = () => {
 			</div>
 		</div>
 	);
+
 };
 
 export default Pertanyaan;
