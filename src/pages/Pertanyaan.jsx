@@ -56,7 +56,7 @@ const Pertanyaan = () => {
 			switch (consult.nextQuestion) {
 				//Kalau Next Question Kosong, maka Pertanyaan selanjutnya leaf
 				case '':
-					if (data.leaf === null) {
+					if (data.leaf === null && data.fruit !== null) {
 						dispatch(
 							consultYes({
 								symptom: question[0],

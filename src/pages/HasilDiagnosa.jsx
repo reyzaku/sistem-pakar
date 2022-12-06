@@ -13,6 +13,10 @@ const HasilDiagnosa = () => {
 	//Storing Fetching Error
 	const [err, setErr] = useState(null);
 
+	//Get Current Date
+	const current = new Date();
+  	const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+	
 	//Fetch Data
 	useEffect(() => {
 		const getDataDisease = async () => {
@@ -52,7 +56,7 @@ const HasilDiagnosa = () => {
 								Hasil Diagnosa
 							</h1>
 							<h1 className="text-sm text-indigo-900 text-center">
-								Dibuat pada: {Date.now()}
+								Dibuat pada: {date}
 							</h1>
 							<div className="mt-16 mx-20">
 								<table className="text-lg text-left text-gray-500">
@@ -99,7 +103,7 @@ const HasilDiagnosa = () => {
 
 										<tr className="bg-white border-b">
 											<td className="py-4 px-6 font-bold">Presentase</td>
-											<td className="py-4 px-6 text-red-500 font-bold">{(consult.totalYes / consult.totalNo) * 100}%</td>
+											<td className="py-4 px-6 text-red-500 font-bold">{Math.floor((consult.totalYes / consult.totalNo) * 100)}%</td>
 										</tr>
 									</tbody>
 								</table>
