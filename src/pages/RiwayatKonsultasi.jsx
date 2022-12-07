@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { publicRequest } from '../AxiosInstances';
 
 const RiwayatKonsultasi = () => {
@@ -28,7 +27,6 @@ const RiwayatKonsultasi = () => {
 		}`;
 	}
 
-	console.log(result);
 
 	return (
 		<div>

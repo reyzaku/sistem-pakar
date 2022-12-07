@@ -47,7 +47,7 @@ const DaftarGejala = () => {
           </thead>
           <tbody>
             {gejala?.map((item, index) => (
-              <tr className="bg-white border-b">
+              <tr className="bg-white border-b" key={index + 1}>
                 <td className="py-4 px-6">P000{item.diseaseId}</td>
                 <td className="py-4 px-6">
                   {item.stem !== null ? item.stem : "-"}

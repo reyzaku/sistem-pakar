@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { authRequest, publicRequest } from '../AxiosInstances';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { publicRequest } from '../AxiosInstances';
 import {
 	consultAddPrecentage,
 	consultNo,
-	consultReset,
 	consultYes,
 } from '../redux/consultReduces';
 
@@ -16,16 +15,9 @@ const Pertanyaan = () => {
 	//Stored Fetched Data
 	const [data, setData] = useState([]);
 
-	//Get Params
-	const { id } = useParams();
-
 	//Initiate Question from redux
 	const [question, setQuestion] = useState(consult.question);
-	console.log(question);
-
-	const location = useLocation();
-	const currentLocation = location.pathname.split('/')[1];
-
+	
 	//Storing Fetching Error
 	const [err, setErr] = useState(null);
 
@@ -38,7 +30,6 @@ const Pertanyaan = () => {
 			try {
 				const res = await publicRequest.get(`/symptoms/${question[0]}`);
 				setData(res.data.data);
-				console.log(res.data);
 			} catch (err) {
 				setErr(err);
 			}
@@ -238,8 +229,6 @@ const Pertanyaan = () => {
 			} else {
 				//Jika Belum menjawab iya sebelumnya
 				nextQuestion = question.slice(1);
-				console.log('MENOLAK!');
-				console.log(nextQuestion);
 
 				//Jika User menjawab Tidak dan pilihan penyakit sudah habis
 				if (nextQuestion.length <= 0) {

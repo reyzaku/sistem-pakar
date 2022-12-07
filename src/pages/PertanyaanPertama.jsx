@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { publicRequest } from '../AxiosInstances';
 import { consultInitiate, consultReset } from '../redux/consultReduces';
 
 const PertanyaanPertama = () => {
-
-	const consult = useSelector((state) => state.consult);
 
     //Storing Data
 	const [data, setData] = useState([]);
@@ -35,7 +33,6 @@ const PertanyaanPertama = () => {
                 if(check.length < 1) {
                     setCheck(new Array(res.data.data.length).fill(false))
                 }
-				console.log(res.data);
 			} catch (err) {
 				setErr('Err');
 			}
@@ -50,14 +47,12 @@ const PertanyaanPertama = () => {
             index === position ? !item : item
         );
 
-        //Temporary Array for Storing value
+        //Temporary Array htmlFor Storing value
         let temp = []
 
         //Changing Value of the array
         updatedCheckedState.map((item, index) => 
-            item ? temp.push(data[index].id) : 
-            console.log(`temp adalah ${temp}`)
-            
+            item && temp.push(data[index].id) 
         )
 
 		//Updating The store on Checked Data
@@ -66,7 +61,6 @@ const PertanyaanPertama = () => {
     }
 
 	const clickHandle = () => {
-		console.log(question)
 		dispatch(consultInitiate(question))
 		navigate("/q")
 	}
@@ -90,7 +84,7 @@ const PertanyaanPertama = () => {
 				{data?.map((item, index) => (
 					<div key={item.id}>
 						<input
-							className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+							className="htmlForm-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
 							type="checkbox"
 							id="flexCheckDefault"
                             name={item.id}
@@ -99,8 +93,8 @@ const PertanyaanPertama = () => {
                             onChange={() => handleChange(index)}
 						/>
 						<label
-							className="form-check-label inline-block text-gray-800"
-							for="flexCheckDefault"
+							className="htmlForm-check-label inline-block text-gray-800"
+							htmlFor="flexCheckDefault"
 						>
 							{item.stem}
 						</label>

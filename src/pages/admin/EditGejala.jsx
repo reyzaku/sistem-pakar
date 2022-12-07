@@ -8,6 +8,7 @@ const EditGejala = () => {
 	const { id } = useParams();
 
 	const [status, setStatus] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -18,6 +19,7 @@ const EditGejala = () => {
 			} catch (err) {
 				setErr('Err');
 				setStatus(false);
+				setIsOpen(true);
 			}
 		};
 		getData();
@@ -35,23 +37,30 @@ const EditGejala = () => {
 			.then(() => {
 				navigate('/admin/manage');
 			})
-			.catch((err) => {
-				setErr(err);
+			.catch((error) => {
+				setErr(error);
 			});
 	};
 
 	return (
-		<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+		<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 			<h2 className="mb-16 font-bold text-3xl text-indigo-900">
 				Edit Data Gejala
 			</h2>
+			{isOpen && (
+				<h4 className="text-red-500 font-thin mb-16 text-center">
+					{err.message}
+					<br />
+					{err.name}
+				</h4>
+			)}
 			{status ? (
 				<div className="w-full bg-white rounded-l md:mt-0 sm:max-w-md xl:p-0 ">
 					<form action="submit" className="flex flex-col gap-8">
 						<div className="flex flex-col gap-2">
 							<label
-								for="disease"
-								class="block mb-2 text-sm font-medium text-gray-900"
+								htmlFor="disease"
+								className="block mb-2 text-sm font-medium text-gray-900"
 							>
 								Kode penyakit
 							</label>
@@ -63,14 +72,14 @@ const EditGejala = () => {
 								onChange={(e) =>
 									setGejala({ ...gejala, diseaseId: e.target.value })
 								}
-								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+								className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 							/>
 						</div>
 
 						<div className="flex flex-col gap-2">
 							<label
-								for="stem"
-								class="block mb-2 text-sm font-medium text-gray-900"
+								htmlFor="stem"
+								className="block mb-2 text-sm font-medium text-gray-900"
 							>
 								Gejala pada Batang
 							</label>
@@ -80,14 +89,14 @@ const EditGejala = () => {
 								placeholder=""
 								value={gejala.stem}
 								onChange={(e) => setGejala({ ...gejala, stem: e.target.value })}
-								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+								className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 							/>
 						</div>
 
 						<div className="flex flex-col gap-2">
 							<label
-								for="leaf"
-								class="block mb-2 text-sm font-medium text-gray-900"
+								htmlFor="leaf"
+								className="block mb-2 text-sm font-medium text-gray-900"
 							>
 								Gejala pada Daun
 							</label>
@@ -97,14 +106,14 @@ const EditGejala = () => {
 								placeholder=""
 								value={gejala.leaf}
 								onChange={(e) => setGejala({ ...gejala, leaf: e.target.value })}
-								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+								className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 							/>
 						</div>
 
 						<div className="flex flex-col gap-2">
 							<label
-								for="fruit"
-								class="block mb-2 text-sm font-medium text-gray-900"
+								htmlFor="fruit"
+								className="block mb-2 text-sm font-medium text-gray-900"
 							>
 								Gejala pada Buah
 							</label>
@@ -116,14 +125,14 @@ const EditGejala = () => {
 								onChange={(e) =>
 									setGejala({ ...gejala, fruit: e.target.value })
 								}
-								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+								className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 							/>
 						</div>
 
 						<div className="flex flex-col gap-2">
 							<label
-								for="root"
-								class="block mb-2 text-sm font-medium text-gray-900"
+								htmlFor="root"
+								className="block mb-2 text-sm font-medium text-gray-900"
 							>
 								Gejala pada Akar
 							</label>
@@ -133,21 +142,21 @@ const EditGejala = () => {
 								placeholder=""
 								value={gejala.root}
 								onChange={(e) => setGejala({ ...gejala, root: e.target.value })}
-								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+								className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 							/>
 						</div>
 
 						<button
 							type="submit"
 							onClick={submitHandle}
-							class="w-full text-white bg-indigo-900 bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+							className="w-full text-white bg-indigo-900 bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 						>
 							Edit Gejala
 						</button>
 					</form>
 				</div>
 			) : (
-				<></>	
+				<></>
 			)}
 		</div>
 	);

@@ -44,7 +44,6 @@ const HasilDiagnosa = () => {
 					solution: resDisease.data.data.solution,
 					presentage: presentage,
 				});
-				console.log(resDisease.data.data);
 			} catch (error) {
 				setErr({ ...err, disease: error });
 			}
