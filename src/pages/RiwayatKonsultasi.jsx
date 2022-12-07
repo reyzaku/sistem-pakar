@@ -20,8 +20,15 @@ const RiwayatKonsultasi = () => {
 		getResult();
 	}, []);
 
+	function convertDate(date) {
+		let newDate = new Date(date);
 
-	console.log(result)
+		return `${newDate.getDate()}/${newDate.getMonth()}/${
+			newDate.getYear() + 1900
+		}`;
+	}
+
+	console.log(result);
 
 	return (
 		<div>
@@ -50,7 +57,7 @@ const RiwayatKonsultasi = () => {
 							{result.map((item, index) => (
 								<tr className="bg-white border-b" key={index + 1}>
 									<td className="py-4 px-6">{item.disease}</td>
-									<td className="py-4 px-6">{item.createdAt}</td>
+									<td className="py-4 px-6">{convertDate(item.createdAt)}</td>
 									<td className="py-4 px-6">{item.presentage}%</td>
 								</tr>
 							))}
