@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { publicRequest } from '../AxiosInstances';
+import { authRequest, publicRequest } from '../AxiosInstances';
 import {
 	consultAddPrecentage,
 	consultNo,
@@ -128,7 +128,7 @@ const Pertanyaan = () => {
 						);
 					}
 					break;
-
+				
 				//Kalau Next Question root, maka Pertanyaan konsultasi selesai dan pindah halaman Hasil
 				case 'root':
 					dispatch(

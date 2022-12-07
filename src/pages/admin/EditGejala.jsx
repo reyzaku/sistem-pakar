@@ -7,13 +7,17 @@ const EditGejala = () => {
 	const [gejala, setGejala] = useState({});
 	const { id } = useParams();
 
+	const [status, setStatus] = useState(false);
+
 	useEffect(() => {
 		const getData = async () => {
 			try {
 				const res = await publicRequest.get(`/symptoms/${id}`);
-				setGejala(res.data.data[0]);
+				setGejala(res.data.data);
+				setStatus(true);
 			} catch (err) {
 				setErr('Err');
+				setStatus(false);
 			}
 		};
 		getData();
@@ -27,7 +31,7 @@ const EditGejala = () => {
 	const submitHandle = (e) => {
 		e.preventDefault();
 		authRequest
-			.put(`/symptoms/${gejala.id}`, gejala)
+			.put(`/symptoms/${id}`, gejala)
 			.then(() => {
 				navigate('/admin/manage');
 			})
@@ -41,9 +45,7 @@ const EditGejala = () => {
 			<h2 className="mb-16 font-bold text-3xl text-indigo-900">
 				Edit Data Gejala
 			</h2>
-			{Object.keys(gejala).length === 0 ? (
-				<></>
-			) : (
+			{status ? (
 				<div className="w-full bg-white rounded-l md:mt-0 sm:max-w-md xl:p-0 ">
 					<form action="submit" className="flex flex-col gap-8">
 						<div className="flex flex-col gap-2">
@@ -57,7 +59,7 @@ const EditGejala = () => {
 								type="text"
 								name="disease"
 								disabled
-								value={`P000${gejala.diseaseId}`}
+								value={`P000${id}`}
 								onChange={(e) =>
 									setGejala({ ...gejala, diseaseId: e.target.value })
 								}
@@ -140,10 +142,12 @@ const EditGejala = () => {
 							onClick={submitHandle}
 							class="w-full text-white bg-indigo-900 bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 						>
-							Tambah Gejala
+							Edit Gejala
 						</button>
 					</form>
 				</div>
+			) : (
+				<></>	
 			)}
 		</div>
 	);

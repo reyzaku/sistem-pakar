@@ -32,13 +32,13 @@ const Manage = () => {
 			}
 		};
 		getGejala();
-	}, []);
+	}, [popUp]);
 
 	const clickHandle = (e) => {
 		authRequest
 			.delete(`/diseases/${e.target.name}`)
 			.then(() => {
-				setPopUp(true);
+				setPopUp(!popUp);
 			})
 			.catch((error) => {
 				setErr({ ...error, penyakit: error });
@@ -76,6 +76,12 @@ const Manage = () => {
 										className="bg-blue-500 px-8 py-2 text-white text-sm rounded-md"
 									>
 										Edit Penyakit
+									</Link>
+									<Link
+										to={`/admin/edit/gejala/${item.symptom.id}`}
+										className="bg-yellow-500 px-8 py-2 text-white text-sm rounded-md"
+									>
+										Edit Gejala
 									</Link>
 									<button
 										onClick={clickHandle}
