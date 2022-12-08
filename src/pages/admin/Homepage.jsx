@@ -22,24 +22,24 @@ const HomepageAdmin = () => {
 			<div className="flex justify-between gap-4 items-center mt-32">
 				<Card
 					title="Tambah Penyakit"
-					link="penyakit"
-					text="white"
-					color="bg-red-500"
-					hover="hover:bg-red-600"
-				/>
-				<Card
-					title="Tambah Gejala"
-					link="gejala"
-					text="white"
-					color="bg-yellow-500"
-					hover="hover:bg-yellow-600"
-				/>
-				<Card
-					title="Rules"
-					link="konsultasi"
+					link="admin/tambah/penyakit"
 					text="white"
 					color="bg-blue-500"
 					hover="hover:bg-blue-600"
+				/>
+				<Card
+					title="Tambah Gejala"
+					link="admin/tambah/gejala"
+					text="white"
+					color="bg-green-500"
+					hover="hover:bg-green-600"
+				/>
+				<Card
+					title="Manage Penyakit"
+					link="admin/manage"
+					text="white"
+					color="bg-yellow-500"
+					hover="hover:bg-yellow-600"
 				/>
 			</div>
 		</div>

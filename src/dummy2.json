@@ -1,0 +1,56 @@
+[
+	{
+		"symphtomId": "1",
+		"name": "Batang padi patah",
+		"yes": "6",
+		"no": "2"
+	},
+	{
+		"symphtomId": "2",
+		"name": "batang padi mati",
+		"yes": "6",
+		"no": "3"
+	},
+	{
+		"symphtomId": "3",
+		"name": "batang padi mengerucut",
+		"yes": "6",
+		"no": "4"
+	},
+	{
+		"symphtomId": "4",
+		"name": "batang padi kecil",
+		"yes": "6",
+		"no": "4"
+	},
+	{
+		"symphtomId": "5",
+		"name": "batang padi menguning",
+		"yes": "6",
+		"no": "6"
+	},
+	{
+		"symphtomId": "6",
+		"name": "batang padi tidak berkembang",
+		"yes": "10",
+		"no": "7"
+	},
+	{
+		"symphtomId": "7",
+		"name": "daun bercak-bercah coklat",
+		"yes": "10",
+		"no": "8"
+	},
+    {
+		"symphtomId": "8",
+		"name": "daun bercak-bercah coklat",
+		"yes": "9",
+		"no": "0"
+	},
+    {
+		"symphtomId": "9",
+		"name": "daun bercak-bercah coklat",
+		"yes": "10",
+		"no": "8"
+	}
+]

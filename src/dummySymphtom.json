@@ -1,0 +1,65 @@
+{
+	"message": "Get One Symptom",
+	"data": [
+        {
+            "id": 1,
+            "diseaseId": 1,
+            "stem": "Batang patah-patah",
+            "leaf": "Daun bercak bercak warna coklat",
+            "fruit": null,
+            "root": null,
+            "createdAt": "2022-12-02T04:16:33.000Z",
+            "updatedAt": "2022-12-02T04:27:18.000Z",
+            "disease": {
+                "name": "Blash",
+                "solution": "Gatau",
+                "image_url": "images/image_url-1669920574049.jpg"
+            }
+        },
+        {
+            "id": 2,
+            "diseaseId": 2,
+            "stem": "Batang padi mati",
+            "leaf": "Daun bercak bercak kehitaman",
+            "fruit": null,
+            "root": null,
+            "createdAt": "2022-12-02T04:16:33.000Z",
+            "updatedAt": "2022-12-02T04:27:18.000Z",
+            "disease": {
+                "name": "Blash",
+                "solution": "Gatau",
+                "image_url": "images/image_url-1669920574049.jpg"
+            }
+        },
+        {
+            "id": 3,
+            "diseaseId": 3,
+            "stem": "Batang padi mengerucut",
+            "leaf": "Pelepah daun berwarna abu",
+            "fruit": "buah yang berisi sedikit",
+            "root": null,
+            "createdAt": "2022-12-02T04:16:33.000Z",
+            "updatedAt": "2022-12-02T04:27:18.000Z",
+            "disease": {
+                "name": "Blash",
+                "solution": "Gatau",
+                "image_url": "images/image_url-1669920574049.jpg"
+            }
+        },
+        {
+            "id": 4,
+            "diseaseId": 4,
+            "stem": "Batang padi kecil",
+            "leaf": "daun berwarna kuning jingga",
+            "fruit": "buah padi kosong",
+            "root": null,
+            "createdAt": "2022-12-02T04:16:33.000Z",
+            "updatedAt": "2022-12-02T04:27:18.000Z",
+            "disease": {
+                "name": "Blash",
+                "solution": "Gatau",
+                "image_url": "images/image_url-1669920574049.jpg"
+            }
+        }
+    ]
+}
