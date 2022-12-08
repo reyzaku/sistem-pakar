@@ -11,7 +11,7 @@ const PenyakitCard = (props) => {
 				<h3>
 					<img
 						alt="Placeholder"
-						className="block h-auto w-full"
+						className="w-[500px] h-64 rounded-xl object-cover"
 						src={`http://localhost:5000/${props.data.image_url}`}
 					/>
 				</h3>

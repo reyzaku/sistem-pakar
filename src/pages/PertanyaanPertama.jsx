@@ -47,7 +47,7 @@ const PertanyaanPertama = () => {
             index === position ? !item : item
         );
 
-        //Temporary Array htmlFor Storing value
+        //Temporary Array for Storing value
         let temp = []
 
         //Changing Value of the array
